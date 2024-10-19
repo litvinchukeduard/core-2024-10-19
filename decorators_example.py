@@ -1,3 +1,4 @@
+from functools import wraps
 '''
 Написати декоратор, який буде виводити аргументи функції
 
@@ -8,15 +9,18 @@ With arguments 1, 2, 3, 4, 5
 '''
 
 def print_arguments(function):
+    @wraps(function)
     def wrapper(*args, **kwargs):
         # print(args, kwargs)
+        print(f"Calling {function.__name__}")
         result = function(*args, **kwargs)
         # print(result)
         return result
     return wrapper
 
-@print_arguments
+# @print_arguments
 def my_function(one, two, three, four=4, five="five"):
+    """Documentation for my function"""
     return "Hello"
 
 def my_other_function(*args, **kwargs):
@@ -24,7 +28,12 @@ def my_other_function(*args, **kwargs):
     print(kwargs)
 
 
-result = my_function(1, 2, 3, 4, 5)
+# print(my_function.__name__)
+# print(my_function.__doc__)
+my_other_function.__name__ = "hello"
+print(my_other_function.__name__)
+
+# result = my_function(1, 2, 3, 4, 5)
 # print(result)
 # print(result + " world!")
 
@@ -43,9 +52,9 @@ arguments = ["one", 2, "Three", [1, 2, 3]]
 
 list_1 = [1, 2, 3]
 list_2 = [*list_1, 6, 7]
-print(list_2)
+# print(list_2)
 
 list_2[0] = 0
-print(list_2)
-print(list_1)
+# print(list_2)
+# print(list_1)
 
